@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myfirstapp/component/coffee_tile.dart';
+import 'package:myfirstapp/http_widget.dart';
 import 'package:myfirstapp/models/coffee.dart';
 import 'package:myfirstapp/models/coffee_shop.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +24,8 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<CoffeeShop>(
-        builder: ((context, value, child) => SafeArea(
-                child: Padding(
+      builder: ((context, value, child) => SafeArea(
+            child: Padding(
               padding: const EdgeInsets.all(25.0),
               child: Column(
                 children: [
@@ -36,17 +37,25 @@ class _CartPageState extends State<CartPage> {
                     height: 20,
                   ),
                   Expanded(
-                      child: ListView.builder(
-                          itemCount: value.userCart.length,
-                          itemBuilder: ((context, int index) {
-                            Coffee eachCoffee = value.userCart[index];
-                            return CoffeeTile(
-                                icon: const Icon(Icons.delete),
-                                coffee: eachCoffee,
-                                onPressed: () => removeFromCart(eachCoffee));
-                          })))
+                    child: ListView.builder(
+                      itemCount: value.userCart.length,
+                      itemBuilder: ((context, int index) {
+                        Coffee eachCoffee = value.userCart[index];
+                        return CoffeeTile(
+                            icon: const Icon(Icons.delete),
+                            coffee: eachCoffee,
+                            onPressed: () => removeFromCart(eachCoffee));
+                      }),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const HttpWidget(),
                 ],
               ),
-            ))));
+            ),
+          )),
+    );
   }
 }
